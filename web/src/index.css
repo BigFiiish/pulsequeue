@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+  background-image:
+    radial-gradient(55rem 28rem at 8% -12%, rgb(245 158 11 / 0.14), transparent),
+    radial-gradient(45rem 22rem at 110% 8%, rgb(249 115 22 / 0.10), transparent);
+  background-attachment: fixed;
+}
