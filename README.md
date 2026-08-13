@@ -10,6 +10,8 @@
 
 Enqueue a batch, then watch four workers lease jobs, retry the flaky ones with exponential backoff, and park the rest in a dead-letter queue. Built to make backend queue semantics *visible*.
 
+**Live:** [pulsequeue-wokz.onrender.com](https://pulsequeue-wokz.onrender.com)
+
 ![PulseQueue dashboard with live workers and a mixed job batch](docs/screenshot.png)
 
 ## What it demonstrates
@@ -49,12 +51,15 @@ Open http://localhost:5173 and click **Demo load**.
 
 ### Production
 
+The live site is a long-running Node process on [Render](https://render.com) (`render.yaml`). Free instances sleep after idle time, so the first request after a pause can take ~30s.
+
 ```bash
-cd web && npm run build
-cd ../server && npm run build && npm start
+npm install
+npm run build
+npm start
 ```
 
-The server serves the built frontend and the API from one port (`PORT`, default 3002). Scale workers with `WORKERS=8`.
+That serves the built frontend and the API from one port (`PORT`, default 3002). Scale workers with `WORKERS=8`.
 
 ## Tests
 
