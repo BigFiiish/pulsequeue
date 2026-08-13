@@ -3,7 +3,7 @@ services:
     name: pulsequeue
     runtime: node
     plan: free
-    buildCommand: npm install --include=dev && npm run build
+    buildCommand: rm -f package-lock.json web/package-lock.json server/package-lock.json && npm install --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
