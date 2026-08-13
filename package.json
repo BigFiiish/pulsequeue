@@ -5,8 +5,12 @@
   "engines": {
     "node": ">=22"
   },
+  "workspaces": [
+    "web",
+    "server"
+  ],
   "scripts": {
-    "build": "npm ci --prefix web && npm run build --prefix web && npm ci --prefix server && npm run build --prefix server",
+    "build": "npm run build -w pulsequeue-web && npm run build -w pulsequeue-server",
     "start": "node server/dist/index.js"
   }
 }
