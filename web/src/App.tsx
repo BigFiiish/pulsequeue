@@ -69,7 +69,8 @@ export default function App() {
 
       {error && (
         <p className="mb-4 rounded-lg border border-rose-900 bg-rose-950/40 px-3 py-2 text-sm text-rose-300">
-          {error} — start the server with <code>npm run dev</code> in <code>server/</code>.
+          {error}. Locally, start <code>npm run dev</code> in <code>server/</code>. On the live
+          site, the process may be waking up — wait a few seconds and refresh.
         </p>
       )}
 

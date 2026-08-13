@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: pulsequeue
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: WORKERS
+        value: "4"

@@ -34,12 +34,17 @@ app.get("/api/snapshot", (_req, res) => {
 
 app.get("/api/events", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
   res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");
   res.flushHeaders();
   res.write(`data: ${JSON.stringify({ type: "hello" })}\n\n`);
   sseClients.add(res);
+  const heartbeat = setInterval(() => {
+    res.write(": keepalive\n\n");
+  }, 15000);
   req.on("close", () => {
+    clearInterval(heartbeat);
     sseClients.delete(res);
   });
 });
@@ -71,7 +76,16 @@ app.delete("/api/jobs/terminal", (_req, res) => {
 
 const webDist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../web/dist");
 app.use(express.static(webDist));
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    next();
+    return;
+  }
+  res.sendFile(path.join(webDist, "index.html"), (err) => {
+    if (err) next(err);
+  });
+});
 
-app.listen(PORT, () => {
-  console.log(`PulseQueue listening on http://localhost:${PORT} (${WORKERS} workers)`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`PulseQueue listening on http://0.0.0.0:${PORT} (${WORKERS} workers)`);
 });
